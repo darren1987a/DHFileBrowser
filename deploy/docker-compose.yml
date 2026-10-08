@@ -1,0 +1,24 @@
+# DH 自行維護的 FileBrowser Quantum 部署（fork 自 gtsteffaniak/filebrowser，Apache-2.0）
+# 測試期用 9521，確認後改回 9520 並停掉舊的 filebrowser 容器。
+services:
+  filebrowser-quantum:
+    build:
+      context: ..
+      dockerfile: ./_docker/Dockerfile
+      args:
+        VERSION: ${FB_VERSION:-v1.5.7-stable-dh}
+        REVISION: ${FB_REVISION:-local}
+    image: dh/filebrowser-quantum:local
+    container_name: filebrowser-quantum
+    restart: unless-stopped
+    ports:
+      - "9521:80"
+    volumes:
+      - D:/:/srv
+      - ./config.yaml:/home/filebrowser/data/config.yaml:ro
+      - D:/Filebrowser/quantum/data:/home/filebrowser/data/db
+      - D:/Filebrowser/quantum/tmp:/home/filebrowser/tmp
+    environment:
+      - FILEBROWSER_CONFIG=/home/filebrowser/data/config.yaml
+      - FILEBROWSER_DATABASE=/home/filebrowser/data/db/database.db
+      - FILEBROWSER_ADMIN_PASSWORD=${FB_ADMIN_PASSWORD:?請在 deploy/.env 設定 FB_ADMIN_PASSWORD}
