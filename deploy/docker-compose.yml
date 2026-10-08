@@ -1,5 +1,5 @@
 # DH 自行維護的 FileBrowser Quantum 部署（fork 自 gtsteffaniak/filebrowser，Apache-2.0）
-# 測試期用 9521，確認後改回 9520 並停掉舊的 filebrowser 容器。
+# 正式 port 9520（舊的 filebrowser/filebrowser 容器已停用，restart=no）。
 services:
   filebrowser-quantum:
     build:
@@ -12,7 +12,7 @@ services:
     container_name: filebrowser-quantum
     restart: unless-stopped
     ports:
-      - "9521:80"
+      - "9520:80"
     volumes:
       - D:/:/srv
       - ./config.yaml:/home/filebrowser/data/config.yaml:ro
