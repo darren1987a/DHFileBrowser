@@ -13,6 +13,8 @@ server:
         rules:
           - folderName: "$RECYCLE.BIN"
           - folderName: "System Volume Information"
+    - path: "/saves"
+      name: "saves"
 auth:
   tokenExpirationHours: 24
   methods:
